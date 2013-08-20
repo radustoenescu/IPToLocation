@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                           controllers.Application.index
+POST    /query                      controllers.Application.getLocation
 
 #WebJars
 GET     /webjars/*file                    controllers.WebJarAssets.at(file)

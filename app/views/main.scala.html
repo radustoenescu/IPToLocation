@@ -4,26 +4,37 @@
     <head>
         <title>Locator</title>
         
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/custom.css")">
 
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         
         @*Angular*@
         <script src="@routes.WebJarAssets.at(WebJarAssets.locate("angular.min.js"))"></script>
         
+        <script src="@routes.Assets.at("javascripts/modernizr.js")"></script>
         <script src="@routes.Assets.at("javascripts/LocatorController.js")"></script>
 
     </head>
 
-    <body ng-controller="LocatorController">
-       
-       <form action="">
-       	<label for="IP">
-       		IP
-       		<input name="IP" type="text" ng-model="title">
-       	</label>
-       	
-       </form>
+    <body class="container" ng-app>
+
+      <h2>Locator</h2>
+      <hr>
+      <div class="row" ng-controller="LocatorController">
+        <div class="span12">
+          <form method="post" action="" class="form-inline" >
+            <label for="coordinates">Latitude and longitude</label>
+            <input name="coordinates" class="span5 field" type="text" ng-model="coordinates" >
+            <label for="ip">IP address</label>
+            <input name="ip" class="span5 field" type="text" ng-model="ip">
+            <hr>
+            <button type="submit" class="btn btn-primary" ng-click="get_location_name()">
+              Go
+            </button>
+          </form>
+        </div>
+      </div>
         
     
     </body>
