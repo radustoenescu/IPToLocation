@@ -9,12 +9,15 @@ object ApplicationBuild extends Build {
 
   val appDependencies = Seq(
     "org.webjars" %% "webjars-play" % "2.1.0-2",    
-    "org.webjars" % "angularjs" % "1.1.5-1"
+    "org.webjars" % "angularjs" % "1.1.5-1",
+    "com.twitter" % "finagle-core" % "6.5.2", 
+    "com.twitter" % "finagle-http" % "6.5.2"
   )
 
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
-    coffeescriptOptions := Seq("bare")
+    resolvers ++= Seq("Twitter Repo" at "http://maven.twttr.com/")
   )
+
 
 }
