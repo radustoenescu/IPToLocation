@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html ng-app>
+    <head>
+        <title>Locator</title>
+        
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        
+        @*Angular*@
+        <script src="@routes.WebJarAssets.at(WebJarAssets.locate("angular.min.js"))"></script>
+        
+        <script src="@routes.Assets.at("javascripts/LocatorController.js")"></script>
+
+    </head>
+
+    <body ng-controller="LocatorController">
+       
+       <form action="">
+       	<label for="IP">
+       		IP
+       		<input name="IP" type="text" ng-model="title">
+       	</label>
+       	
+       </form>
+        
+    
+    </body>
+
+
+</html>
