@@ -1,4 +1,4 @@
-function LocatorController($scope) {
+function LocatorController($scope, $http) {
 
 /*	Asks Geolocation API for latitude and longitude,
 	if not available, defaults to 45 45
@@ -36,14 +36,13 @@ function LocatorController($scope) {
 	}
 
 	$scope.get_location_name = function() {
-		if (! ($scope.valid_lat_lon() || $scope.valid_ip()) {
+		if (! ($scope.valid_lat_lon() || $scope.valid_ip())) {
 			alert("Neither the coordinates nor the IP address seems right.\nGive it another shot.");
 		}
 
     	var postData = {coordinates: $scope.coordinates, ip: $scope.ip};
     	
-    	$http.post('query', postData
-    	).success(function(data, status, headers, config) {
+    	$http.post('query', postData).success( function(data, status, headers, config) {
     		console.log(status + data);
     	}).error(function(data, status, headers, config) {
     		console.log(data + status);

@@ -18,7 +18,7 @@ object Application extends Controller {
 
       println(ip + " " + coordinates)
 
-      Ok("Feed added")
+      Ok("Sorry, we could not determine your location")
 
     }.getOrElse {
       
