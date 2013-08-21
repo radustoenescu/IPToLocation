@@ -24,7 +24,7 @@ function LocatorController($scope, $http) {
 		var postData = {coordinates: $scope.coordinates, ip: $scope.ip};
     	
     	$http.post('query', postData).success( function(data, status, headers, config) {
-    		console.log(status + data);
+    		console.log(status + JSON.stringify(data["results"][0]["address_components"]));
     	}).error(function(data, status, headers, config) {
     		console.log(data + status);
     	});
