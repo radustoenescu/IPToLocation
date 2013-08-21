@@ -50,15 +50,16 @@ object Application extends Controller {
       map { response => response.json
     }.filter { response => (response \ "status").asOpt[String] match {
       //            make sure status is ok
-      case Some(value) => value equals "OK"
-      case None => false
-    }
+        case Some(value) => value equals "OK"
+        case None => false
+      }
     }.map { response =>
       (response \ "results").asOpt[List[JsObject]] match {
         case Some(results) =>
           Logger info (results.mkString("\n"))
           //            get those results of type locality
           results.filter { result =>
+
             (result \ "types").asOpt[List[JsValue]] match {
               case Some(types) =>
                 Logger info types.mkString("\n")
@@ -66,8 +67,10 @@ object Application extends Controller {
                 types.exists { resultType =>
                   resultType.toString() == "\"locality\""
                 }
+
               case None => false
             }
+
           } match {
             case locality :: _ => (locality \ "address_components")(0).\("long_name").toString
             case _ => throw new NoSuchElementException
@@ -86,14 +89,14 @@ object Application extends Controller {
       map { response => response.json
     }.filter { response => (response \ "statusDescription").asOpt[String] match {
       //            make sure status is ok
-      case Some(value) => value equals "OK"
-      case None => false
-    }
+        case Some(value) => value equals "OK"
+        case None => false
+      }
     }.map { response =>
       (response \ "resourceSets").asOpt[List[JsObject]] match {
+
         case Some(results) if results.length > 0 =>
           Logger info (results.mkString("\n"))
-
           ((results(0) \ "resources")(0) \ "address" \ "locality").toString
 
         case None => throw new NoSuchElementException
