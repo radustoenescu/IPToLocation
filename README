@@ -1,4 +1,7 @@
-This is your new Play 2.1 application
-=====================================
+##This is Locator
 
-This file will be packaged with your application, when using `play dist`.
+It is a Play 2 Scala app.
+
+Get your location name based on your location or IP address.
+
+Enjoy life and Locator, too.
