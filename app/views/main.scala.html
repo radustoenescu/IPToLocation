@@ -23,6 +23,9 @@
       <hr>
       <div class="row" ng-controller="LocatorController">
         <div class="span12">
+            <h4 ng-bind="location"></h4>
+        </div>
+        <div class="span12">
           <form method="post" action="" class="form-inline" ng-submit="get_location_name()">
             <label for="coordinates">Latitude and longitude</label>
             <input name="coordinates" class="span5 field" type="text" ng-model="coordinates" >

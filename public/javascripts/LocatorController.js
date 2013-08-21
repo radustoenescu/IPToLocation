@@ -1,5 +1,7 @@
 function LocatorController($scope, $http) {
 
+    $scope.location = "Unknown location"
+
 /*	Asks Geolocation API for latitude and longitude,
 	if not available, defaults to 45 45
 */
@@ -24,7 +26,8 @@ function LocatorController($scope, $http) {
 		var postData = {coordinates: $scope.coordinates, ip: $scope.ip};
     	
     	$http.post('query', postData).success( function(data, status, headers, config) {
-    		console.log(status + JSON.stringify(data["results"][0]["address_components"]));
+    		console.log(status + data);
+            $scope.location = data;
     	}).error(function(data, status, headers, config) {
     		console.log(data + status);
     	});
