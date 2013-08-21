@@ -27,42 +27,7 @@ object Application extends Controller {
       val latitude = coordinates(0).trim
       val longitude = coordinates(1).trim
 
-      val url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" +
-        latitude + "," + longitude + "&sensor=false"
-
-      Logger info ("Asking Google for: " + url)
-
-      val googleLocation = WS.url(url).get().
-        map { response => response.json
-        }.filter { response => (response \ "status").asOpt[String] match {
-            case Some(value) => value equals "OK"
-            case None => false
-         }
-        }. map { response =>
-          (response \ "results").asOpt[List[JsObject]] match {
-            case Some(results) =>
-              Logger info (results.mkString("\n"))
-//            get those results of type locality
-              results.filter { result =>
-                (result \ "types").asOpt[List[JsValue]] match {
-                  case Some(types) =>
-                    Logger info types.mkString("\n")
-
-                    types.exists { resultType =>
-                      resultType.toString() == "\"locality\""
-                    }
-                  case None => false
-                }
-              } match {
-                case locality :: _ => (locality \ "address_components")(0).\("long_name").toString
-                case _ => throw new NoSuchElementException
-              }
-
-            case None => throw new NoSuchElementException
-          }
-        }
-
-      val request: Future[String] = googleLocation
+      val request: Future[String] = buildGoogleRequest(latitude, longitude)
 
       Async {
         request.map { response =>
@@ -76,5 +41,41 @@ object Application extends Controller {
     
     }
   }
-  
+
+  private def buildGoogleRequest(latitude: String, longitude: String): Future[String] = {
+    val url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" +
+      latitude + "," + longitude + "&sensor=false"
+
+    WS.url(url).get().
+      map { response => response.json
+    }.filter { response => (response \ "status").asOpt[String] match {
+      //            make sure status is ok
+      case Some(value) => value equals "OK"
+      case None => false
+    }
+    }.map { response =>
+      (response \ "results").asOpt[List[JsObject]] match {
+        case Some(results) =>
+          Logger info (results.mkString("\n"))
+          //            get those results of type locality
+          results.filter { result =>
+            (result \ "types").asOpt[List[JsValue]] match {
+              case Some(types) =>
+                Logger info types.mkString("\n")
+
+                types.exists { resultType =>
+                  resultType.toString() == "\"locality\""
+                }
+              case None => false
+            }
+          } match {
+            case locality :: _ => (locality \ "address_components")(0).\("long_name").toString
+            case _ => throw new NoSuchElementException
+          }
+
+        case None => throw new NoSuchElementException
+      }
+    }
+  }
+
 }
