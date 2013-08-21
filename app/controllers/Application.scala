@@ -5,9 +5,7 @@ import libs.json.{JsValue, JsObject}
 import libs.ws.WS
 import play.api.mvc._
 import play.api.libs.concurrent.Execution.Implicits._
-import concurrent.Future
 import play.api.Play._
-import java.io.File
 import com.maxmind.geoip2.DatabaseReader
 import scala.concurrent._
 import java.net.InetAddress
