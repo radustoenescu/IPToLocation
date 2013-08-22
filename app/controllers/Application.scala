@@ -124,7 +124,7 @@ object Application extends Controller {
   private def buildMaxMindIPRequest(ip: String): Future[String] = {
     future {
       val city = ipBasedLocationService.city(InetAddress.getByName(ip))
-      city.toString
+      city.getCity.getName
     }
   }
 
